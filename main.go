@@ -4,6 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"examples/htmx-go/components"
+	"examples/htmx-go/models"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,11 +29,19 @@ func main() {
 		status := c.PostForm("status")
 		id, _ := CreateToDo(title, status)
 
-		c.HTML(http.StatusOK, "task", gin.H{
-			"Title":  title,
-			"Status": status,
-			"Id":     id,
-		})
+		/* c.HTML leverages Go native templating */
+		// c.HTML(http.StatusOK, "task", gin.H{
+		// 	"Title":  title,
+		// 	"Status": status,
+		// 	"Id":     id,
+		// })
+
+		c.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+		c.Status(http.StatusOK)
+		component := components.Task(models.ToDo{Id: id, Title: title, Status: status})
+		if err := component.Render(c.Request.Context(), c.Writer); err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
 	})
 
 	e.DELETE("/todos/:id", func(c *gin.Context) {

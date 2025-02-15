@@ -4,14 +4,10 @@ import (
 	"database/sql"
 	"log"
 
+	"examples/htmx-go/models"
+
 	_ "github.com/mattn/go-sqlite3"
 )
-
-type ToDo struct {
-	Id     int    `json:"id"`
-	Title  string `json:"title"`
-	Status string `json:"status"`
-}
 
 var DB *sql.DB
 
@@ -53,13 +49,13 @@ func DeleteToDo(id int64) error {
 	return err
 }
 
-func ReadToDoList() []ToDo {
+func ReadToDoList() []models.ToDo {
 	rows, _ := DB.Query("SELECT id, title, status FROM todos")
 	defer rows.Close()
 
-	todos := make([]ToDo, 0)
+	todos := make([]models.ToDo, 0)
 	for rows.Next() {
-		var todo ToDo
+		var todo models.ToDo
 		rows.Scan(&todo.Id, &todo.Title, &todo.Status)
 		todos = append(todos, todo)
 	}

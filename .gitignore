@@ -1,2 +1,5 @@
+.vscode/
+
 tmp/
 awesome.db
+node_modules

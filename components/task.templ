@@ -1,0 +1,15 @@
+package components
+
+import (
+	"examples/htmx-go/models"
+	"fmt"
+)
+
+templ Task(task models.ToDo) {
+	<li class="task">
+		{ task.Title } - { task.Status }
+		<button hx-delete={ fmt.Sprintf("/todos/%d", task.Id) } hx-target="closest li" hx-swap="outerHTML">
+			Delete
+		</button>
+	</li>
+}
