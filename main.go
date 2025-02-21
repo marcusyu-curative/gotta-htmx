@@ -16,22 +16,14 @@ func main() {
 	defer DB.Close()
 
 	mux := http.NewServeMux()
-	mux.Handle("/", loggingMiddleware(http.HandlerFunc(indexHandler)))
+	mux.Handle("GET /", loggingMiddleware(http.HandlerFunc(indexHandler)))
 	mux.Handle("POST /todos", loggingMiddleware(http.HandlerFunc(createToDoHandler)))
 	mux.Handle("DELETE /todos/{id}", loggingMiddleware(http.HandlerFunc(deleteToDoHandler)))
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
 	todos := ReadToDoList()
-	// if err := comp.Render(r.Context(), w); err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// }
 	render(w, r, components.Index(todos))
 }
 
