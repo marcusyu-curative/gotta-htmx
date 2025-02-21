@@ -1,4 +1,0 @@
-<li class=\"task list-row\"><div>
-</div><div>
-</div><button class=\"btn btn-md btn-secondary\" hx-delete=\"
-\" hx-target=\"closest li\" hx-swap=\"outerHTML\">Delete</button></li>

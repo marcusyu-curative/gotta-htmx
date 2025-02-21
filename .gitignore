@@ -1,5 +1,8 @@
-# Build output
-tmp/
+# Air tmp dir
+tmp/        
+
+# templ txt files
+*_templ.txt
 
 # Test data
 awesome.db
