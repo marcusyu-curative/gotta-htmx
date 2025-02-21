@@ -1,8 +1,0 @@
-{{ define "task" }}
-<li class="task">
-  {{.Title}} - {{.Status}}
-  <button hx-delete="/todos/{{.Id}}" hx-target="closest li" hx-swap="outerHTML">
-    Delete
-  </button>
-</li>
-{{ end }}
