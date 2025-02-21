@@ -31,7 +31,7 @@ func Index(todos []models.ToDo) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><script src=\"https://unpkg.com/htmx.org@2.0.4\" integrity=\"sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+\" crossorigin=\"anonymous\"></script><script>\n\t\t\t\tfunction updatePlaceholder() {\n\t\t\t\tconst tasks = document\n\t\t\t\t\t.getElementById(\"tasks\")\n\t\t\t\t\t.querySelectorAll(\"li.task\");\n\t\t\t\tconsole.log(tasks);\n\t\t\t\tconst placeholder = document.getElementById(\"no-tasks\");\n\t\t\t\tif (tasks.length > 0) {\n\t\t\t\t\tplaceholder.setAttribute(\"hidden\", true);\n\t\t\t\t} else {\n\t\t\t\t\tplaceholder.removeAttribute(\"hidden\");\n\t\t\t\t}\n\t\t\t\t}\n\t\t\t</script></head><body hx-on::after-request=\"console.log(&#39;body.after-request&#39;);\" hx-on::after-swap=\"console.log(&#39;body.after-swap&#39;);\"><h1>Your Tasks</h1><ul id=\"tasks\" hx-on::after-request=\"console.log(&#39;after-request&#39;); updatePlaceholder();\" hx-on::after-swap=\"console.log(&#39;after-swap&#39;); updatePlaceholder();\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><link href=\"./static/css/tailwind.css\" rel=\"stylesheet\"><script src=\"https://unpkg.com/htmx.org@2.0.4\" integrity=\"sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+\" crossorigin=\"anonymous\"></script><script defer src=\"https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js\" integrity=\"sha384-X9kJyAubVxnP0hcA+AMMs21U445qsnqhnUF8EBlEpP3a42Kh/JwWjlv2ZcvGfphb\" crossorigin=\"anonymous\"></script><script>\n\t\t\t\tfunction updatePlaceholder() {\n\t\t\t\tconst tasks = document\n\t\t\t\t\t.getElementById(\"tasks\")\n\t\t\t\t\t.querySelectorAll(\"li.task\");\n\t\t\t\tconsole.log(tasks);\n\t\t\t\tconst placeholder = document.getElementById(\"no-tasks\");\n\t\t\t\tif (tasks.length > 0) {\n\t\t\t\t\tplaceholder.setAttribute(\"hidden\", true);\n\t\t\t\t} else {\n\t\t\t\t\tplaceholder.removeAttribute(\"hidden\");\n\t\t\t\t}\n\t\t\t\t}\n\t\t\t</script></head><body hx-on::after-request=\"console.log(&#39;body.after-request&#39;);\" hx-on::after-swap=\"console.log(&#39;body.after-swap&#39;);\"><h1 class=\"text-3xl font-bold\">Your Tasks</h1><ul id=\"tasks\" class=\"list bg-base-100 rounded-box shadow-md\" hx-on::after-request=\"console.log(&#39;after-request&#39;); updatePlaceholder();\" hx-on::after-swap=\"console.log(&#39;after-swap&#39;); updatePlaceholder();\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,7 +41,7 @@ func Index(todos []models.ToDo) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<li id=\"no-tasks\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<li class=\"list-row\" id=\"no-tasks\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -51,7 +51,7 @@ func Index(todos []models.ToDo) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, ">No tasks found</li></ul><form hx-post=\"/todos\" hx-target=\"#tasks\" hx-swap=\"beforeend\" hx-on::after-request=\"if(event.detail.successful) this.reset()\"><input type=\"text\" name=\"title\" placeholder=\"Task title\"> <input type=\"text\" name=\"status\" placeholder=\"Task status\"> <button type=\"submit\">Save</button></form></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, ">No tasks found</li></ul><form hx-post=\"/todos\" hx-target=\"#tasks\" hx-swap=\"beforeend\" hx-on::after-request=\"if(event.detail.successful) this.reset()\"><div class=\"mt-2\"><input class=\"input\" type=\"text\" name=\"title\" placeholder=\"Task\"></div><input class=\"input\" type=\"text\" name=\"status\" placeholder=\"Status\"> <button class=\"btn btn-primary\" type=\"submit\">Save</button></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -17,6 +17,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /", loggingMiddleware(http.HandlerFunc(indexHandler)))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.Handle("POST /todos", loggingMiddleware(http.HandlerFunc(createToDoHandler)))
 	mux.Handle("DELETE /todos/{id}", loggingMiddleware(http.HandlerFunc(deleteToDoHandler)))
 	log.Fatal(http.ListenAndServe(":8080", mux))

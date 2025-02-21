@@ -6,7 +6,9 @@ templ Index(todos []models.ToDo) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
+			<link href="./static/css/tailwind.css" rel="stylesheet"/>
 			<script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+			<script defer src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js" integrity="sha384-X9kJyAubVxnP0hcA+AMMs21U445qsnqhnUF8EBlEpP3a42Kh/JwWjlv2ZcvGfphb" crossorigin="anonymous"></script>
 			<script>
 				function updatePlaceholder() {
 				const tasks = document
@@ -26,16 +28,17 @@ templ Index(todos []models.ToDo) {
 			hx-on::after-request="console.log('body.after-request');"
 			hx-on::after-swap="console.log('body.after-swap');"
 		>
-			<h1>Your Tasks</h1>
+			<h1 class="text-3xl font-bold">Your Tasks</h1>
 			<ul
 				id="tasks"
+				class="list bg-base-100 rounded-box shadow-md"
 				hx-on::after-request="console.log('after-request'); updatePlaceholder();"
 				hx-on::after-swap="console.log('after-swap'); updatePlaceholder();"
 			>
 				for _, task := range todos {
 					@Task(task)
 				}
-				<li id="no-tasks" hidden?={ len(todos) > 0 }>
+				<li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
 					No tasks found
 				</li>
 			</ul>
@@ -45,9 +48,11 @@ templ Index(todos []models.ToDo) {
 				hx-swap="beforeend"
 				hx-on::after-request="if(event.detail.successful) this.reset()"
 			>
-				<input type="text" name="title" placeholder="Task title"/>
-				<input type="text" name="status" placeholder="Task status"/>
-				<button type="submit">Save</button>
+				<div class="mt-2">
+					<input class="input" type="text" name="title" placeholder="Task"/>
+				</div>
+				<input class="input" type="text" name="status" placeholder="Status"/>
+				<button class="btn btn-primary" type="submit">Save</button>
 			</form>
 		</body>
 	</html>

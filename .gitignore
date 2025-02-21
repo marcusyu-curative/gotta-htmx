@@ -1,5 +1,15 @@
-.vscode/
-
+# Build output
 tmp/
+
+# Test data
 awesome.db
-node_modules
+
+# Node.js Dependencies
+node_modules/
+
+# Tailwind compiled output
+static/css/tailwind.css
+
+# OS specific files
+.DS_Store
+Thumbs.db

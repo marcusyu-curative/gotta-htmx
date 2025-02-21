@@ -6,9 +6,10 @@ import (
 )
 
 templ Task(task models.ToDo) {
-	<li class="task">
-		{ task.Title } - { task.Status }
-		<button hx-delete={ fmt.Sprintf("/todos/%d", task.Id) } hx-target="closest li" hx-swap="outerHTML">
+	<li class="task list-row">
+		<div>{ task.Title }</div>
+		<div>{ task.Status }</div>
+		<button class="btn btn-md btn-secondary" hx-delete={ fmt.Sprintf("/todos/%d", task.Id) } hx-target="closest li" hx-swap="outerHTML">
 			Delete
 		</button>
 	</li>
