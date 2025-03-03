@@ -28,32 +28,60 @@ templ Index(todos []models.ToDo) {
 			hx-on::after-request="console.log('body.after-request');"
 			hx-on::after-swap="console.log('body.after-swap');"
 		>
-			<h1 class="text-3xl font-bold">Your Tasks</h1>
-			<ul
-				id="tasks"
-				class="list bg-base-100 rounded-box shadow-md"
-				hx-on::after-request="console.log('after-request'); updatePlaceholder();"
-				hx-on::after-swap="console.log('after-swap'); updatePlaceholder();"
-			>
-				for _, task := range todos {
-					@Task(task)
-				}
-				<li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
-					No tasks found
-				</li>
-			</ul>
-			<form
-				hx-post="/todos"
-				hx-target="#tasks"
-				hx-swap="beforeend"
-				hx-on::after-request="if(event.detail.successful) this.reset()"
-			>
-				<div class="mt-2">
-					<input class="input" type="text" name="title" placeholder="Task"/>
-				</div>
-				<input class="input" type="text" name="status" placeholder="Status"/>
-				<button class="btn btn-primary" type="submit">Save</button>
-			</form>
+            <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+                <div class="mx-auto max-w-2xl">
+                    <h1 class="text-3xl font-bold">Your Tasks</h1>
+
+                    <div class="w-full max-w-lg">
+                        <ul
+                            id="tasks"
+                            class="list bg-base-100 rounded-box shadow-md"
+                            hx-on::after-request="console.log('after-request'); updatePlaceholder();"
+                            hx-on::after-swap="console.log('after-swap'); updatePlaceholder();"
+                        >
+                            for _, task := range todos {
+                                @Task(task)
+                            }
+                            <li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
+                                No tasks found
+                            </li>
+                        </ul>
+                    </div> 
+
+                    <form
+                        hx-post="/todos"
+                        hx-target="#tasks"
+                        hx-swap="beforeend"
+                        hx-on::after-request="if(event.detail.successful) this.reset()"
+                    >
+                        <div class="space-y-2">
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <h2 class="text-base/7 font-semibold">Add Task</h2>
+                                
+                                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                    <div class="sm:col-span-3">
+                                        <label for="title" class="block text-sm/6 font-medium">Task</label>
+                                        <div class="mt-2">
+                                            <input class="input block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" type="text" name="title" placeholder="Task"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-3">
+                                        <label for="status" class="block text-sm/6 font-medium">Status</label>
+                                        <div class="mt-2">
+                                            <input class="input block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" type="text" name="status" placeholder="Status"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center justify-end gap-x-6">
+                            <button class="btn btn-primary rounded-md px-3 py-2 text-sm font-semibold shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 		</body>
 	</html>
 }
