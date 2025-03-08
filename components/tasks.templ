@@ -5,18 +5,20 @@ import (
 )
 
 templ Tasks(todos []models.ToDo) {
-    <ul
-        id="tasks"
-        x-ref="list"
-        class="list bg-base-100 rounded-box shadow-md"
-        hx-on::after-request="console.log('after-request'); updatePlaceholder();"
-        hx-on::after-swap="console.log('after-swap'); updatePlaceholder(); Alpine.initTree($refs.list);"
-    >
-        for _, task := range todos {
-            @Task(task)
-        }
-        <li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
-            No tasks found
-        </li>
-    </ul>
+    <div class="max-h-80 overflow-y-auto">
+        <ul
+            id="tasks"
+            x-ref="list"
+            class="list bg-base-100 rounded-box shadow-md"
+            hx-on::after-request="console.log('after-request'); updatePlaceholder();"
+            hx-on::after-swap="console.log('after-swap'); updatePlaceholder(); Alpine.initTree($refs.list);"
+        >
+            for _, task := range todos {
+                @Task(task)
+            }
+            <li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
+                No tasks found
+            </li>
+        </ul>
+    </div>
 }
