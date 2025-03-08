@@ -1,53 +1,55 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"net/http"
-	"strconv"
 
-	"examples/htmx-go/components"
+	"examples/htmx-go/db"
+	"examples/htmx-go/handlers"
+	"examples/htmx-go/middleware"
 	"examples/htmx-go/models"
-
-	"github.com/a-h/templ"
 )
 
 func main() {
-	InitDatabase()
-	defer DB.Close()
+    database, _ := db.New()
+	defer database.Close()
+    
+	router := http.NewServeMux()
+	router.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+    
+    todoHandler := &handlers.ToDoHandler{
+        Todos: models.ToDoModel{DB: database.Conn},
+    }
 
-	mux := http.NewServeMux()
-	mux.Handle("GET /", loggingMiddleware(http.HandlerFunc(indexHandler)))
-	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	mux.Handle("POST /todos", loggingMiddleware(http.HandlerFunc(createToDoHandler)))
-	mux.Handle("DELETE /todos/{id}", loggingMiddleware(http.HandlerFunc(deleteToDoHandler)))
-	log.Fatal(http.ListenAndServe(":8080", mux))
-}
+    router.HandleFunc("GET /", todoHandler.Index)
+    router.HandleFunc("POST /todos", todoHandler.Create) 
+    router.HandleFunc("DELETE /todos/{id}", todoHandler.Delete)
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	todos := ReadToDoList()
-	render(w, r, components.Index(todos))
-}
+    invoiceHandler := &handlers.InvoiceHandler{}
 
-func createToDoHandler(w http.ResponseWriter, r *http.Request) {
-	title := r.FormValue("title")
-	status := r.FormValue("status")
-	id, _ := CreateToDo(title, status)
-	render(w, r, components.Task(models.ToDo{Id: id, Title: title, Status: status}))
-}
+    adminRouter := http.NewServeMux()
+    adminRouter.HandleFunc("POST /invoice", invoiceHandler.Create)
 
-func deleteToDoHandler(w http.ResponseWriter, r *http.Request) {
-	param := r.PathValue("id")
-	id, _ := strconv.ParseInt(param, 10, 64)
-	DeleteToDo(id)
-}
+    // Middleware stacking
+    stack := middleware.CreateStack(
+        middleware.Logging,
+    )
 
-func render(w http.ResponseWriter, r *http.Request, component templ.Component) error {
-	return component.Render(r.Context(), w)
-}
+    // Subrouting
+    v1 := http.NewServeMux()
+    v1.Handle("/v1/", http.StripPrefix("/v1", router))
 
-func loggingMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("%s %s", r.Method, r.URL.Path)
-		next.ServeHTTP(w, r)
-	})
+    adminStack := middleware.CreateStack(
+        middleware.EnsureAdmin,
+        middleware.IsAuthenticated,
+    )
+    router.Handle("/", adminStack(adminRouter))
+    
+    server := http.Server{
+        Addr:    ":8080",
+        Handler: stack(router),
+    }
+
+    fmt.Println("Server listening port 8080")
+    server.ListenAndServe()
 }
