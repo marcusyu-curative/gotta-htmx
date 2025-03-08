@@ -6,7 +6,9 @@ import (
 )
 
 templ Task(task models.ToDo) {
-    <li id="task" class="list-row">
+    <li id="task" class="list-row" 
+        x-show="search === '' || $el.textContent.toLowerCase().includes(search.toLowerCase())"
+    >
         <div class="list-col-grow">{ task.Title }</div>
         <div>{ task.Status }</div>
         <button class="btn btn-md btn-secondary" 
