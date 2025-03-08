@@ -1,0 +1,21 @@
+package components
+
+import (
+    "examples/htmx-go/models"
+)
+
+templ Tasks(todos []models.ToDo) {
+    <ul
+        id="tasks"
+        class="list bg-base-100 rounded-box shadow-md"
+        hx-on::after-request="console.log('after-request'); updatePlaceholder();"
+        hx-on::after-swap="console.log('after-swap'); updatePlaceholder();"
+    >
+        for _, task := range todos {
+            @Task(task)
+        }
+        <li class="list-row" id="no-tasks" hidden?={ len(todos) > 0 }>
+            No tasks found
+        </li>
+    </ul>
+}

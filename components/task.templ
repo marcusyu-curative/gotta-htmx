@@ -1,16 +1,19 @@
 package components
 
 import (
-	"examples/htmx-go/models"
-	"fmt"
+    "examples/htmx-go/models"
+    "fmt"
 )
 
 templ Task(task models.ToDo) {
-	<li class="task list-row">
-		<div>{ task.Title }</div>
-		<div>{ task.Status }</div>
-		<button class="btn btn-md btn-secondary" hx-delete={ fmt.Sprintf("/todos/%d", task.Id) } hx-target="closest li" hx-swap="outerHTML">
-			Delete
-		</button>
-	</li>
+    <li id="task" class="list-row">
+        <div class="list-col-grow">{ task.Title }</div>
+        <div>{ task.Status }</div>
+        <button class="btn btn-md btn-secondary" 
+            hx-delete={ fmt.Sprintf("/todos/%d", task.Id) } 
+            hx-target="closest li" hx-swap="outerHTML"
+        >
+            Delete
+        </button>
+    </li>
 }
