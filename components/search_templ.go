@@ -29,7 +29,7 @@ func Search() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<label class=\"input\"><svg class=\"h-[1em] opacity-50\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g stroke-linejoin=\"round\" stroke-linecap=\"round\" stroke-width=\"2.5\" fill=\"none\" stroke=\"currentColor\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle> <path d=\"m21 21-4.3-4.3\"></path></g></svg> <input x-model=\"search\" type=\"search\" class=\"grow\" placeholder=\"Search\"> <kbd class=\"kbd kbd-sm\">⌘</kbd> <kbd class=\"kbd kbd-sm\">K</kbd></label>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<label class=\"input\" x-data><svg class=\"h-[1em] opacity-50\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><g stroke-linejoin=\"round\" stroke-linecap=\"round\" stroke-width=\"2.5\" fill=\"none\" stroke=\"currentColor\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle> <path d=\"m21 21-4.3-4.3\"></path></g></svg> <input x-model=\"search\" x-ref=\"search\" type=\"search\" class=\"grow\" placeholder=\"Search\" @keydown.meta.k.window.prevent=\"$focus.focus($refs.search)\"> <kbd class=\"kbd kbd-sm\">⌘</kbd> <kbd class=\"kbd kbd-sm\">K</kbd></label>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
