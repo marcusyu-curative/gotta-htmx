@@ -33,7 +33,7 @@ func Tasks(todos []models.ToDo) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-h-80 overflow-y-auto\"><ul id=\"tasks\" x-ref=\"list\" class=\"list bg-base-100 rounded-box shadow-md\" hx-on::after-request=\"console.log(&#39;after-request&#39;); updatePlaceholder();\" hx-on::after-swap=\"console.log(&#39;after-swap&#39;); updatePlaceholder(); Alpine.initTree($refs.list);\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"py-2 max-h-80 overflow-y-auto rounded-sm border border-gray-500/50\"><ul id=\"tasks\" x-ref=\"list\" class=\"list bg-base-100 rounded-box shadow-md\" hx-on::after-request=\"console.log(&#39;after-request&#39;); updatePlaceholder();\" hx-on::after-swap=\"console.log(&#39;after-swap&#39;); updatePlaceholder(); Alpine.initTree($refs.list);\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

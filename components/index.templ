@@ -36,7 +36,9 @@ templ Index(todos []models.ToDo) {
                     <h2 class="text-3xl font-bold">Your Tasks</h2>
 
                     <div class="pb-12" x-data="{ search: '' }">
-                        @Search()
+                        <div class="py-4">
+                            @Search()
+                        </div>
                         @Tasks(todos)
                     </div> 
 
